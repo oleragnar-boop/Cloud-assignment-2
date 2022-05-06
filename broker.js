@@ -1,3 +1,4 @@
+//this broker is based on the example provided in exercise 9
 const aedes = require('aedes')();
 const httpServer = require("http").createServer();
 const ws = require("websocket-stream");

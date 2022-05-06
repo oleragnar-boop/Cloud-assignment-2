@@ -1,3 +1,4 @@
+//this client is based on the example provided in exercise 9
 const mqtt = require('mqtt')
 const host = 'cloud-oblig-2-mqtt.herokuapp.com'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
