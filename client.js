@@ -1,8 +1,8 @@
 const mqtt = require('mqtt')
-const host = 'localhost'
-const port = '1883'
+const host = 'cloud-oblig-2-mqtt.herokuapp.com'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
-const connectUrl = `mqtt://${host}:${port}`
+
+const connectUrl = `ws://${host}`
 
 const client = mqtt.connect(connectUrl, {
     clientId,
