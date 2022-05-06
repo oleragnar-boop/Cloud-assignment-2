@@ -8,7 +8,7 @@ ws.createServer({ server: httpServer }, aedes.handle);
 httpServer.listen(port, function () {
     console.log('Aedes listening on port:', port)
     aedes.publish({ topic: 'aedes/hello', payload: "I'm broker " + aedes.id })
-})
+   })
 
 //when a client connects
 aedes.on('client', function (client) {
