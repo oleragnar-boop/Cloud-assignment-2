@@ -47,14 +47,14 @@ const connectToBroker = () => {
             console.log(`Subscribe to topic '${topic}'`)
         })
 
-        setInterval(() => {
+        //setInterval(() => {
             client.publish(topic, generateHumData(), { qos: 0, retain: false }, (error) => {
                 if (error) {
                     console.error(error)
                 }
             })
 
-        }, 10000)
+        //}, 10000)
     })
     
     client.on('message', (topic, payload) => {
