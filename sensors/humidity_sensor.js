@@ -25,7 +25,8 @@ const client_details = {
     reconnectPeriod: 1000,
 }
 
-generateHumData = () => {
+
+const generateHumData = () => {
     let = humData = [{
         time : Date.now(),
         humidity : Math.floor(Math.random() * 101) 
@@ -34,37 +35,42 @@ generateHumData = () => {
     return humDataString;
 }
 
+const connectToBroker = () => {
+    const client = mqtt.connect(connectUrl, client_details)
+    const topic = 'humidity'
+    console.log('Trying to connect')
 
-verify_client = () => {
+    client.on('connect', () => {
+        console.log('Sucessfully connected to the broker')
+    
+        client.subscribe([topic], () => {
+            console.log(`Subscribe to topic '${topic}'`)
+        })
+
+        setInterval(() => {
+            client.publish(topic, generateHumData(), { qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error(error)
+                }
+            })
+
+        }, 10000)
+    })
+    
+    client.on('message', (topic, payload) => {
+        console.log('Received Message:', topic, payload.toString())
+    })
+}
+
+const verify_client = async () => {
 Clients.findOne({name: client_name, password: client_pass}, function (err, obj){
     if(err || obj == null ) {
         console.log("Something went wrong, client was not connected")
     } else{
-        const client = mqtt.connect(connectUrl, client_details)
-        const topic = 'humidity'
-
-        client.on('connect', () => {
-            console.log('Sucessfully connected to the broker')
-        
-            client.subscribe([topic], () => {
-                console.log(`Subscribe to topic '${topic}'`)
-            })
-
-            setInterval(() => {
-                client.publish(topic, generateHumData(), { qos: 0, retain: false }, (error) => {
-                    if (error) {
-                        console.error(error)
-                    }
-                })
-
-            }, 10000)
-        })
-        
-        client.on('message', (topic, payload) => {
-            console.log('Received Message:', topic, payload.toString())
-        })
-
+        connectToBroker()
     }
 })
 }
+
+verify_client();
 
