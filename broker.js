@@ -1,3 +1,13 @@
+/*
+==========================================================
+|broker.js acts as a middleman between subscribers and and publishers
+|   Clients can publish to a topic and the broker will
+|   forward the message to the subscribers.                
+|             
+==========================================================
+*/
+
+
 //this broker is based on the example provided in exercise 9
 //MQTT broker
 
