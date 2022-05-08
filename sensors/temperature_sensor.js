@@ -3,7 +3,7 @@
 |temperature_sensor.js simulates a temperature sensor
 |
 |1. Connects to the broker as a PUBLISHER on the topic 'light'|
-|2. Generates light data on a set intervall           |
+|2. Generates temperature data on a set intervall           |
 |3. Publishes the data to the broker
 |   a. On the topic 'temperature'
 |   b. With the payload of the temperature data
@@ -35,12 +35,12 @@ var payload = ""
 //function for generating humidity data
 //400 is normal outdoors, 30000 is direct sunlight (really bad interp)
 const generateTemperatureData = () => {
-    min = Math.ceil(0);
-    max = Math.floor(35);
+    min = Math.ceil(35);
+    max = Math.floor(0);
     let = TemperatureData = [{
         name: client_name,
         time: Date.now(),
-        relative_temperature: Math.floor(Math.random() * (max - min) + min)
+        temperature: Math.floor(Math.random() * (max - min) + min)
     }]
     payload = JSON.stringify(TemperatureData)
 }
