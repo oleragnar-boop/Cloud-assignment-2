@@ -27,7 +27,7 @@ mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_gr
 
 //setting client data name and password
 const client_name = 'Temperature_sensor'
-const client_pass = 'splashsplash'
+const client_pass = 'hotitburns'
 
 //setting global variable payload
 var payload =""
@@ -37,17 +37,17 @@ var payload =""
 const generateLightData = () => {
     min = Math.ceil(0);
     max = Math.floor(35);
-    let = LightData = [{
+    let = TemperatureData = [{
         name: client_name,
         time : Date.now(),
         relative_temperature : Math.floor(Math.random() * (max - min) + min) 
     }]
-    payload = JSON.stringify(lightData)
+    payload = JSON.stringify(TemperatureData)
 }
 
 //calling the data generation function on a set interval
 setInterval(() => {
-    generateLightData();
+    generateTemperatureData();
     }, 5000) 
 
 
@@ -63,7 +63,7 @@ const connectToBroker = () => {
         reconnectPeriod: 1000,
         })
 
-    const topic = 'light';
+    const topic = 'temperature';
     console.log('Trying to connect')
 
     client.on('connect', () => {
