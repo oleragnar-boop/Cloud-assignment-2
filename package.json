@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node broker.js"
+    "start": "node broker.js",
+    "data": "node subscribers/data_analyzer.js",
+    "sl": "node sensors/light_sensor.js",
+    "sh":"node sensors/humidity_sensor.js",
+    "st": "node sensors/temperature_sensor.js"
   },
+
   "author": "",
   "license": "ISC",
   "dependencies": {
