@@ -13,16 +13,16 @@
 //this client is based on the example provided in exercise 9
 //dependencies
 const mqtt = require("mqtt")
-const mongoose = require ("mongoose")
-const Clients = require ("../models/client_schema")
+const mongoose = require("mongoose")
+const Clients = require("../models/client_schema")
 const host = 'cloud-oblig-2-mqtt.herokuapp.com'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 const connectUrl = `ws://${host}`
 
 //establishing connection to database
 mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_greenhouse?retryWrites=true&w=majority", {
-	useUnifiedTopology: true,
-	useNewUrlParser: true
+    useUnifiedTopology: true,
+    useNewUrlParser: true
 });
 
 //setting client data name and password
@@ -30,17 +30,17 @@ const client_name = 'Temperature_sensor'
 const client_pass = 'hotitburns'
 
 //setting global variable payload
-var payload =""
+var payload = ""
 
 //function for generating humidity data
 //400 is normal outdoors, 30000 is direct sunlight (really bad interp)
-const generateLightData = () => {
+const generateTemperatureData = () => {
     min = Math.ceil(0);
     max = Math.floor(35);
     let = TemperatureData = [{
         name: client_name,
-        time : Date.now(),
-        relative_temperature : Math.floor(Math.random() * (max - min) + min) 
+        time: Date.now(),
+        relative_temperature: Math.floor(Math.random() * (max - min) + min)
     }]
     payload = JSON.stringify(TemperatureData)
 }
@@ -48,7 +48,7 @@ const generateLightData = () => {
 //calling the data generation function on a set interval
 setInterval(() => {
     generateTemperatureData();
-    }, 5000) 
+}, 5000)
 
 
 //function for connecting to the broker and publishing
@@ -61,7 +61,7 @@ const connectToBroker = () => {
         username: client_name,
         password: client_pass,
         reconnectPeriod: 1000,
-        })
+    })
 
     const topic = 'temperature';
     console.log('Trying to connect')
@@ -70,7 +70,7 @@ const connectToBroker = () => {
         console.log('Sucessfully connected to the broker')
 
         //publishing on a set interval, uses global variable payload
-          setInterval(() => {
+        setInterval(() => {
             client.publish(topic, payload, { qos: 0, retain: false }, (error) => {
                 if (error) {
                     console.error(error)
@@ -78,19 +78,19 @@ const connectToBroker = () => {
                     console.log(payload)
                 }
             })
-            }, 5000) 
+        }, 5000)
     })
 }
 
 //function that verifies if client is approved and then runs the connectToBroker function 
 const verify_client = async () => {
-Clients.findOne({name: client_name, password: client_pass}, function (err, obj){
-    if(err || obj == null ) {
-        console.log("Something went wrong, client was not connected")
-    } else{
-        connectToBroker()
-    }
-})
+    Clients.findOne({ name: client_name, password: client_pass }, function (err, obj) {
+        if (err || obj == null) {
+            console.log("Something went wrong, client was not connected")
+        } else {
+            connectToBroker()
+        }
+    })
 }
 
 //calling verify_client
