@@ -8,20 +8,23 @@
 </head>
 <body>
     <div class="container">
-        <canvas id="humChart"></canvas>
+        <canvas id="humChart" width="400" height="400"></canvas>
     </div>
 
     <script>
-        const chart = require('chart.js')
-        let humChart = document.getElementById('humChart').getContext('2d'); 
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"
+        const ctx = document.getElementById('humChart').getContext('2d'); 
 
-        let testChart = new Chart(humChart, {
+        const humChart = new Chart(ctx, {
             type:'bar',
-            labels:["Humidity in %", "Light in lumen", "Temperature in "]
-            options:{},
-
-
-        })
+            data: {
+            labels:["Humidity in %", "Light in lumen", "Temperature in celsius"],
+            datasets: [{
+                label: 'Sensor data',
+                data: [<%= humData.relative_humidity %>, <%= lightData.light_lumen %>, <%= tempData.temperature %>]
+            }] 
+            }
+        });
     </script>
 </body>
 </html>
