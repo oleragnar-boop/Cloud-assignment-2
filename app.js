@@ -23,7 +23,7 @@ mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_gr
  app.set('view engine','ejs');
  app.use(bodyParser.urlencoded({ extended: true }))
 
- app.listen( 3000, function () {
+ app.listen( process.env.PORT, function () {
     console.log('listening on 3000')
   })
 
