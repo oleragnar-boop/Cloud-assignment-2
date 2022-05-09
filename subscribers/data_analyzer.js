@@ -57,7 +57,6 @@ client.on('connect', () => {
 
 //When a message is received, the data is parsed 
 client.on('message', async (topic, payload) => {
-    //TOTO add logic
     const payloadJSON = JSON.parse(payload)
     let checkString = JSON.stringify(payloadJSON)
     // If the name = light, do light shit and if name = humidity, do humidity shit
