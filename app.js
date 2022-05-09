@@ -18,6 +18,7 @@ mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_gr
 })
 .then(mongoose => {
 
+    app.use(express.static(__dirname + '/style'))
  app.set('views',__dirname+'/views');
  app.set('view engine','ejs');
  app.use(bodyParser.urlencoded({ extended: true }))
@@ -31,15 +32,15 @@ app.get('/', (req, res) => {
     get_average_hum();
     get_average_light();
     get_average_temp();
-    db.collection('humidity_data').findOne()
+    Humidity.find({})
     .then(results => { 
-        let humData = results;
-        db.collection('lightSensor_data').findOne()
+        let humData = results.map(e => e.relative_humidity);
+        LightSensorModel.find({})
         .then(results => {
-            let lightData = results;
-            db.collection('temperatureSensor_data').findOne()
+            let lightData = results.map(e => e.light_lumen);
+            TemperatureSensorModel.find({})
             .then(results => {
-                let tempData = results;
+                let tempData = results.map(e => e.temperature);
                 res.render("index.ejs", { humData: humData, lightData: lightData, tempData: tempData, averageHum: averageHum, averageLight: averageLight, averageTemp: averageTemp});
             })
         })
