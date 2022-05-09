@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ADDRESS PORT=2000 node app.js & ADDRESS PORT=8080 node broker.js wait -n",
+    "start": "node app.js",
     "data": "node subscribers/data_analyzer.js",
     "sl": "node sensors/light_sensor.js",
     "sh":"node sensors/humidity_sensor.js",
