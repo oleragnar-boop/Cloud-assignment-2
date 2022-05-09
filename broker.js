@@ -11,18 +11,13 @@
 //this broker is based on the example provided in exercise 9
 //MQTT broker
 
+function createBroker(httpServer){
+
 const aedes = require('aedes')();
-const httpServer = require("http").createServer();
 const ws = require("websocket-stream");
-const port = 1880;
 
 
 ws.createServer({ server: httpServer }, aedes.handle);
-
-httpServer.listen(port, function () {
-    console.log('Aedes listening on port:', port)
-    aedes.publish({ topic: 'aedes/hello', payload: "I'm broker " + aedes.id })
-})
 
 //when a client connects
 aedes.on('client', function (client) {
@@ -54,3 +49,7 @@ aedes.on('unsubscribe', function (subscriptions, client) {
 aedes.on('publish', function (packet, client) {
     console.log('Client \x1b[31m' + (client ? client.id : 'BROKER_' + aedes.id) + '\x1b[0m has published', packet.payload.toString(), 'on', packet.topic, 'to broker', aedes.id)
 })
+
+}
+
+module.exports = createBroker;

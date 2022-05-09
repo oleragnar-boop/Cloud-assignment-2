@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
+const http = require('http')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Humidity = require('./models/humidity_schema');
 const LightSensorModel = require('./models/light_schema');
 const TemperatureSensorModel = require('./models/temp_schema');
+const server = http.createServer(app);
+require('./broker')(server);
 const db = mongoose.connection;
+const port =  process.env.PORT || 80;
 
 //global variables for humidity, temperature and light averages
 var averageHum = "";
@@ -16,16 +20,11 @@ mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_gr
 	useUnifiedTopology: true,
 	useNewUrlParser: true
 })
-.then(mongoose => {
 
-    app.use(express.static(__dirname + '/style'))
+app.use(express.static(__dirname + '/style'))
  app.set('views',__dirname+'/views');
  app.set('view engine','ejs');
  app.use(bodyParser.urlencoded({ extended: true }))
-
- app.listen( process.env.PORT, function () {
-    console.log('listening on 3000')
-  })
 
 
 app.get('/', (req, res) => {
@@ -45,9 +44,6 @@ app.get('/', (req, res) => {
             })
         })
     })
-})
-
-
 })
 
 //average humidity
@@ -88,3 +84,7 @@ const get_average_temp = async () => {
     }
 })
 }
+
+server.listen( port, function () {
+    console.log(port)
+  })
