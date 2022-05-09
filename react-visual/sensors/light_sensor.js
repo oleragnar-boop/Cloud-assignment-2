@@ -49,7 +49,7 @@ const generateLightData = () => {
 //calling the data generation function on a set interval
 setInterval(() => {
     generateLightData();
-    }, 5000) 
+    }, 60000) 
 
 
 //function for connecting to the broker and publishing
@@ -58,7 +58,7 @@ const connectToBroker = () => {
     const client = mqtt.connect(connectUrl, {
         clientId,
         clean: true,
-        connectTimeout: 10000,
+        connectTimeout: 650000,
         username: client_name,
         password: client_pass,
         reconnectPeriod: 1000,
@@ -79,7 +79,7 @@ const connectToBroker = () => {
                     console.log(payload)
                 }
             })
-            }, 5000) 
+            }, 600000) 
     })
 }
 
