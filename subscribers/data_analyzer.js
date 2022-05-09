@@ -16,6 +16,7 @@ const mongoose = require('mongoose')
 const Humidity = require('../models/humidity_schema')
 const LightSensorModel = require('../models/light_schema')
 const TemperatureSensorModel = require('../models/temp_schema')
+const Clients = require('../models/client_schema')
 
 //establishing connection to database
 mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_greenhouse?retryWrites=true&w=majority", {
@@ -23,12 +24,18 @@ mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_gr
     useNewUrlParser: true
 });
 
+//setting client data name and password
+const client_name = 'Data_analyzer'
+const client_pass = 'hmmyesdata'
+
+
+const connectToBroker = () => {
 const client = mqtt.connect(connectUrl, {
     clientId,
     clean: true,
-    connectTimeout: 4000,
-    username: 'whatever',
-    password: 'blahblahblah',
+    connectTimeout: 650000,
+    username: client_name,
+    password: client_pass,
     reconnectPeriod: 1000,
 })
 
@@ -75,3 +82,16 @@ client.on('message', async (topic, payload) => {
         })
     }
 })
+}
+
+const verify_client = async () => {
+    Clients.findOne({name: client_name, password: client_pass}, function (err, obj){
+        if(err || obj == null ) {
+            console.log("Wrong credentials, client was not connected.")
+        } else{
+            connectToBroker()
+        }
+    })
+    }
+
+    verify_client();

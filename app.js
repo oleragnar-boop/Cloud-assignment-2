@@ -2,15 +2,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Humidity = require('./models/humidity_schema')
-const LightSensorModel = require('./models/light_schema')
-const TemperatureSensorModel = require('./models/temp_schema')
+const Humidity = require('./models/humidity_schema');
+const LightSensorModel = require('./models/light_schema');
+const TemperatureSensorModel = require('./models/temp_schema');
 const db = mongoose.connection;
 
 //global variables for humidity, temperature and light averages
-var averageHum = ""
-var averageLight = ""
-var averageTemp = ""
+var averageHum = "";
+var averageLight = "";
+var averageTemp = "";
 
 mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_greenhouse?retryWrites=true&w=majority", {
 	useUnifiedTopology: true,
@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://admin:adminadmin@data.c8vtj.mongodb.net/Smart_gr
 })
 .then(mongoose => {
 
-    app.set('views',__dirname+'/views');
+ app.set('views',__dirname+'/views');
  app.set('view engine','ejs');
  app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -56,7 +56,7 @@ const get_average_hum = async () => {
             console.log("Something went wrong")
         } else{
             obj.forEach(function(avgHum){
-                averageHum = avgHum.avg
+                averageHum = Number.parseFloat(avgHum.avg).toFixed(2);
         })
     }
 })
@@ -69,7 +69,7 @@ const get_average_light = async () => {
             console.log("Something went wrong")
         } else{
             obj.forEach(function(avgLight){
-                averageLight = avgLight.avg
+                averageLight = Number.parseFloat(avgLight.avg).toFixed(2);
         })
     }
 })
@@ -82,7 +82,7 @@ const get_average_temp = async () => {
             console.log("Something went wrong")
         } else{
             obj.forEach(function(avgTemp){
-                averageTemp = avgTemp.avg
+                averageTemp = Number.parseFloat(avgTemp.avg).toFixed(2);
         })
     }
 })
