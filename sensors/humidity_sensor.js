@@ -15,7 +15,7 @@
 const mqtt = require("mqtt")
 const mongoose = require ("mongoose")
 const Clients = require ("../models/client_schema")
-const host = '127.0.0.1:1880'
+const host = 'cloud-oblig-2-mqtt.herokuapp.com'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 const connectUrl = `ws://${host}`
 
