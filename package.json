@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node broker.js & node app.js wait -n",
+    "start": "node app.js & node broker.js wait -n",
     "data": "node subscribers/data_analyzer.js",
     "sl": "node sensors/light_sensor.js",
     "sh":"node sensors/humidity_sensor.js",
