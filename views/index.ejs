@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <link href="/styles.css" rel="stylesheet" type="text/css">
+    <title>Data renderer</title>
+</head>
+
+<body>
+    <h1>Data Renderer</h1>
+    <div id="dataHolder">
+        <p>Average relative humidity: <%= averageHum %>%</p>
+        <p>Average lumen: <%= averageLight %> lm</p>
+        <p>Average temperature: <%= averageTemp %> celsius</p>
+    </div>
+    <div class="chartCont">
+      <h2>Humidity Chart</h2>
+    <canvas id="HumChart" width="400px" height="400px"></canvas>
+    </div>
+    <div class="chartCont">
+      <h2>Light Chart</h2>
+      <canvas id="LightChart" width="400px" height="400px"></canvas>
+    </div>
+    <div class="chartCont">
+      <h2>Temperature Chart</h2>
+      <canvas id="TempChart" width="400px" height="400px"></canvas>
+    </div>
+
+<script>
+
+//Code for making the humidity chart
+  let humArray = [<%= humData %>];
+
+  var humLabelArray =  Array.from({length: humArray.length}, (_, i) => i + 1);
+      
+        const humData = {
+          labels: humLabelArray,
+          datasets: [{
+                label: 'Humidity data',
+                data: humArray,
+                backgroundColor: 'rgba(131, 49, 172, 0.8)'
+            }]
+        };
+      
+        const humConfig = {
+          type: 'line',
+          data: humData,
+          options: {}
+        };
+
+        const HumChart = new Chart(
+          document.getElementById('HumChart'),
+          humConfig
+        );
+
+
+
+//Code for making the light chart
+let lightArray = [<%= lightData %>];
+
+var lightLabelArray =  Array.from({length: lightArray.length}, (_, i) => i + 1);
+    
+      const lightData = {
+        labels: lightLabelArray,
+        datasets: [{
+              label: 'Light data',
+              data: lightArray,
+              backgroundColor: 'rgba(182, 189, 78, 0.8)'
+          }]
+      };
+    
+      const lightConfig = {
+        type: 'line',
+        data: lightData,
+        options: {}
+      };
+
+      const LightChart = new Chart(
+        document.getElementById('LightChart'),
+        lightConfig
+      );
+
+//Code for making the temperature chart
+let tempArray = [<%= tempData %>];
+
+var tempLabelArray =  Array.from({length: tempArray.length}, (_, i) => i + 1);
+    
+      const tempData = {
+        labels: tempLabelArray,
+        datasets: [{
+              label: 'Temp data',
+              data: tempArray,
+              backgroundColor: 'rgba(219, 33, 33, 0.8)'
+          }]
+      };
+    
+      const tempConfig = {
+        type: 'line',
+        data: tempData,
+        options: {}
+      };
+
+      const TempChart = new Chart(
+        document.getElementById('TempChart'),
+        tempConfig
+      );
+      </script>
+</body>
+
+</html>

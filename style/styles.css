@@ -1,0 +1,19 @@
+body {
+    text-align: center;
+}
+
+#dataHolder {
+    margin-bottom: 50px;
+}
+
+.chartCont {
+    margin: auto;
+    max-width: 60%;
+    max-height: 500px;
+    margin-bottom: 100px;
+}
+
+.chartCont canvas {
+    max-height: 100%;
+    max-width: 100%;
+}
